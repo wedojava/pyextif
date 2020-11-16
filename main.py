@@ -5,7 +5,7 @@ import os
 def envelope(src):
     ds = gdal.Open(src)
     metadata = dict()
-    ulx, xres, xskew, uly, yskew, yres = ds.GetGeoTransform()
+    ulx, xres, _, uly, _, yres = ds.GetGeoTransform()
     lrx = ulx + (ds.RasterXSize * xres)  # low right x
     lry = uly + (ds.RasterYSize * yres)  # low right y
     metadata['minx'] = ulx
