@@ -1,5 +1,5 @@
-from osgeo import gdal, ogr, osr
-import os
+from handle import Handle
+from osgeo import gdal
 
 
 def envelope(src):
@@ -20,5 +20,8 @@ def envelope(src):
 
 
 if __name__ == "__main__":
-    a = envelope("./test.tif")
+    a = envelope("./example/test/test.tif")
     print(a)
+    c = Handle("./example")
+    c.scan_tif(c.src)
+    print(c.tifs)

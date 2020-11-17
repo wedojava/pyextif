@@ -1,16 +1,19 @@
-import os
+
 
 class Tiff:
     """Tif file class"""
     def __init__(self, filepath):
         self.filepath = filepath
+        self.filename = ""
+        self.areaname = ""
+        self.envelope = []
 
 
-    def get_tifs(self, path):
-        """get tif filelist from src"""
-        tifs = []
-        for item in os.scandir(path):
-            if item.is_file() and item.name.endswith(".tif"):
-                tifs.append(item)
+    def extract(self):
+        pass
 
-        return tifs
+    def match_area(self, areas):
+        pass
+
+    def rename(self):
+        pass
