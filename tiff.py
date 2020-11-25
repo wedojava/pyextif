@@ -1,4 +1,5 @@
 from osgeo import gdal
+from osgeo import ogr
 from os import path
 
 
@@ -6,53 +7,48 @@ class Tiff:
     """Tif file class"""
 
     def __init__(self, filepath):
-        self.__filepath = filepath
+        self.areanames = []
+        self.geometry = None
+        self.filepath = filepath
         self.filename = path.basename(self.filepath).split('.')[0]
-        self.areaname = ""
-        self.__envelope = []
 
-    @property
-    def filepath(self):
-        return self.__filepath
+        # get dataset
+        try:
+            _ds = gdal.Open(filepath)
+        except Exception as e:
+            raise e
+        self.ds = _ds
 
-    @property
-    def ds(self):
-        return gdal.Open(self.filepath)
+        # make geom
+        self.make_geom()
 
-    @property
-    def envelope(self):
-        return self.__envelope
+    def make_geom(self):
+        """This should use after dataset get done.
 
-    @envelope.setter
-    def envelope(self):
+        Return:
+        """
+
+        def make_wkt(points):
+            pp = ""
+            for point in points:
+                i = 0
+                pp += f"{point[0]} {point[1]}"
+                if i < len(points):
+                    pp += ", "
+            return f"POLYGON (({pp}))"
+
         ds = self.ds
-        metadata = dict()
         ulx, xres, _, uly, _, yres = ds.GetGeoTransform()
         lrx = ulx + (ds.RasterXSize * xres)  # low right x
         lry = uly + (ds.RasterYSize * yres)  # low right y
-        metadata['minx'] = ulx
-        maxx = lrx  # ulx + xres * ds.RasterXSize
-        metadata['maxx'] = maxx
-        miny = lry  # uly + yres * ds.RasterYSize
-        metadata['miny'] = miny
-        metadata['maxy'] = uly
-        self.__envelope = metadata
-
-    def extract(self):
-        ds = gdal.Open(self.filepath)
-        metadata = dict()
-        ulx, xres, _, uly, _, yres = ds.GetGeoTransform()
-        lrx = ulx + (ds.RasterXSize * xres)  # low right x
-        lry = uly + (ds.RasterYSize * yres)  # low right y
-        metadata['minx'] = ulx
-        maxx = lrx  # ulx + xres * ds.RasterXSize
-        metadata['maxx'] = maxx
-        miny = lry  # uly + yres * ds.RasterYSize
-        metadata['miny'] = miny
-        metadata['maxy'] = uly
+        minx, miny, maxx, maxy = ulx, lry, lrx, uly
+        points = [ [minx, miny], [maxx, miny], [minx, maxy], [maxx, maxy] ]
+        wkt = make_wkt(points)
+        self.geometry = ogr.CreateGeometryFromWkt(wkt)
 
     def match_area(self, areas):
         pass
 
     def rename(self):
         pass
+
