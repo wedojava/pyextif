@@ -1,4 +1,4 @@
-from handle import Handle
+from controller import Controller
 from osgeo import gdal
 
 
@@ -17,11 +17,8 @@ def envelope(src):
     return metadata
 
 
-
-
 if __name__ == "__main__":
-    a = envelope("./example/test/test.tif")
-    print(a)
-    c = Handle("./example")
-    c.scan_tif(c.src)
-    print(c.tifs)
+    # a = envelope("./example/test/test.tif")
+    # print(a)
+    c = Controller()
+    c.do("./example", "./example/config.txt")

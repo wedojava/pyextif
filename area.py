@@ -8,7 +8,8 @@ class Area():
 
     def __init__(self, arg):
         self.name = arg
-        self.__geom_poly
+        self.wkt = None
+        self.__geom_poly = None
 
     @property
     def geom_poly(self):
