@@ -20,5 +20,8 @@ def envelope(src):
 if __name__ == "__main__":
     # a = envelope("./example/test/test.tif")
     # print(a)
-    c = Controller()
-    c.do("./example", "./example/config.txt")
+    # c = Controller()
+    # c = Controller("./example", "./example/config.txt")
+    c = Controller(cfg="./example/config.txt")
+    c.set_tifs_area()
+    print(c.tifs[0].areanames)

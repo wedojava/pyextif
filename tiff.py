@@ -8,11 +8,11 @@ class Tiff:
 
     def __init__(self, filepath):
         self.areanames = []
-        self.geometry = None
         self.ds = None
-        self.wkt = None
         self.filepath = filepath
         self.filename = path.basename(self.filepath).split('.')[0]
+        self.geometry = None
+        self.wkt = None
 
     def dataset(self):
         """Open tif file set `self.ds` and return dataset."""
