@@ -10,7 +10,6 @@ def main():
     # c = Controller(cfg="./example/config.txt")
     c = Controller(src, cfg)
     c.set_tifs_area()
-    print(c.tifs[0].areanames)
     c.rename()
 
 if __name__ == "__main__":

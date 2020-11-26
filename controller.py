@@ -1,4 +1,5 @@
 import os
+import pathlib
 from osgeo import ogr
 from tiff import Tiff
 
@@ -6,9 +7,9 @@ from tiff import Tiff
 class Controller:
     """Deal with folder and files"""
 
-    def __init__(self, src="./", cfg="./config.txt"):
-        self.src = src
-        self.cfg = cfg
+    def __init__(self, src=os.getcwd(), cfg="config.txt"):
+        self.src = src if src else os.getcwd()
+        self.cfg = cfg if cfg else "config.txt"
         self.tifs = []
         self.areas = []
         self.read_cfg()
