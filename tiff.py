@@ -1,6 +1,5 @@
-from osgeo import gdal
-from osgeo import ogr
-from os import path
+import os
+from osgeo import gdal, ogr
 
 
 class Tiff:
@@ -10,8 +9,9 @@ class Tiff:
         self.areanames = []
         self.ds = None
         self.filepath = filepath
-        self.filename = path.basename(self.filepath).split('.')[0]
+        self.dir, self.filename = os.path.split(self.filepath)
         self.geometry = None
+        self.siblings = []
         self.wkt = None
 
     def dataset(self):
@@ -44,3 +44,13 @@ class Tiff:
             maxx, maxy], [minx, maxy], [minx, miny]]
         self.wkt = make_wkt(points)
         self.geometry = ogr.CreateGeometryFromWkt(self.wkt)
+
+    def set_siblings(self):
+        """get and set sibling filepaths that have same name with tif file."""
+
+        prename = self.filename.split(".tif")[0]
+        tif_dir = os.path.split(self.filepath)[0]
+        for item in os.scandir(tif_dir):
+            itemname = os.path.basename(item)
+            if itemname.split('.')[0] == prename:
+                self.siblings.append(itemname)

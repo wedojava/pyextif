@@ -25,3 +25,4 @@ if __name__ == "__main__":
     c = Controller(cfg="./example/config.txt")
     c.set_tifs_area()
     print(c.tifs[0].areanames)
+    c.rename()
