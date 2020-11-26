@@ -1,6 +1,6 @@
 from controller import Controller
 from osgeo import gdal
-
+import sys
 
 def main():
     src = input("Input tiff files dir(default is \".\"):")
@@ -16,6 +16,9 @@ if __name__ == "__main__":
     while 1:
         try:
             main()
+            print("[+] Done. Press any key to exit.")
+            input()
+            sys.exit(0)
         except FileNotFoundError:
             print("[-] Please make sure config file at right spot as you input.")
         except Exception as err:
