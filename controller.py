@@ -49,6 +49,7 @@ class Controller:
             for area in self.areas:
                 if intersection(tif.wkt, area[1]):
                     tif.areanames.append(area[0])
+            tif.dataset_close()
 
     def rename(self):
         for tif in self.tifs:

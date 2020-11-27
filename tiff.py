@@ -24,6 +24,9 @@ class Tiff:
             raise e
         self.ds = _ds
         return _ds
+    
+    def dataset_close(self):
+        self.ds = None
 
     def make_wkt_geom(self):
         """This should be used after dataset get done."""
