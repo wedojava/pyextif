@@ -16,8 +16,7 @@ if __name__ == "__main__":
     while 1:
         try:
             main()
-            print("[+] Done. Press any key to exit.")
-            input()
+            input("[+] Done. Press any key to exit.")
             sys.exit(0)
         except FileNotFoundError:
             print("[-] Please make sure config file at right spot as you input.")
