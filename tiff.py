@@ -24,7 +24,7 @@ class Tiff:
             raise e
         self.ds = _ds
         return _ds
-    
+
     def dataset_close(self):
         self.ds = None
 

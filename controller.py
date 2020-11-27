@@ -68,7 +68,7 @@ class Controller:
                 newpath = os.path.join(tif.dir, prefix + s)
                 # print(f"[{oldpath}] => should rename as => [{newpath}]")
                 os.rename(oldpath, newpath)
-            
+
             # rename tif dir, if it's name is same as tif file.
             tiffoldername = os.path.split(tif.dir)[1]
             puretifname = tif.filename.split(".tif")[0]
