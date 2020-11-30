@@ -4,12 +4,13 @@ import sys
 
 
 def main():
-    src = input("Input tiff files dir(default is \".\"):")
-    cfg = input("Input config file path(default is \"./config.txt\"):")
     # c = Controller()
-    # c = Controller(src="./example", cfg="./example/config.txt")
+    c = Controller(src="./example", cfg="./example/config.txt")
     # c = Controller(cfg="./example/config.txt")
-    c = Controller(src, cfg)
+    # src = input("Input tiff files dir(default is \".\"):")
+    # cfg = input("Input config file path(default is \"./config.txt\"):")
+    # c = Controller(src, cfg)
+    c.read_cfg_static()
     c.set_tifs_area()
     c.rename()
 
