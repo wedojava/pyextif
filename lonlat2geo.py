@@ -51,9 +51,12 @@ def degree2float(degree: str) -> float:
     if "°" in degree:
         degree = degree.replace('\'', '′').replace('\"', '″')
         d, dd = degree.split('°')
+        d = float(d) if d else 0
         m, mm = dd.split('′')
+        m = float(m) if m else 0
         s = mm.split('″')[0]
-        return float(d) + float(m)/60 + float(s)/3600
+        s = float(s) if s else 0
+        return d + m/60 + s/3600
     else:
         return float(degree)
 

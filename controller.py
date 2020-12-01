@@ -13,26 +13,21 @@ class Controller:
         self.cfg = cfg if cfg else "config.txt"
         self.tifs = []
         self.areas = []
-        # self.read_cfg_static()
-        self.scan_tif(self.src)
+        # self.read_cfg(self.cfg)
+        # self.scan_tifs(self.src)
 
-    def scan_tif(self, dir):
+    def scan_tifs(self, dir):
         """Scan dir for tif files recursively"""
 
         for entry in os.scandir(dir):
             if entry.is_dir():
-                self.scan_tif(entry)
+                self.scan_tifs(entry)
             elif not entry.name.startswith(".") and entry.name.endswith(".tif"):
                 tif = Tiff(entry.path)
                 self.tifs.append(tif)
 
-    # def read_cfg(self):
-    #     with open(self.cfg) as f:
-    #         for line in f:
-    #             name, wkt = line.split(':')
-    #             self.areas.append([name, wkt.strip()])
-    def read_cfg_static(self):
-        with open(self.cfg) as f:
+    def read_cfg(self, cfg):
+        with open(cfg) as f:
             for line in f:
                 wkt = ""
                 name, poly = line.split(':')
@@ -41,12 +36,13 @@ class Controller:
                     p1, p2 = p.split(',')
                     p1 = lonlat2geo.degree2float(p1.strip())
                     p2 = lonlat2geo.degree2float(p2.strip())
-                    p = lonlat2geo.lonlat2geo_static(3857, p1, p2) # TODO: 坐标系3857是否会发生变化？
+                    p = lonlat2geo.lonlat2geo_static(
+                        3857, p1, p2)  # TODO: 坐标系3857是否会发生变化？
                     wkt += p + ', '
                 wkt = f"POLYGON (({wkt[:-2]}))"
                 print(wkt)
                 self.areas.append([name, wkt.strip()])
-    
+
     def set_tifs_area(self):
         """if tif intersected with areas in config, set the areaname to the tif."""
 
